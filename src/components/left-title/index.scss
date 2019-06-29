@@ -1,0 +1,22 @@
+@font-face{
+  font-family: san-regular;
+  src: url('../../assets/fonts/JosefinSans-Regular.ttf')
+}
+.title-container{
+  position: fixed;
+  top: 50vh;
+  padding-left: 50px;
+  margin-top: -40px;
+  transition: left 1s ease-in-out;
+  
+  .main-text{
+    font-size: 50px;
+    font-family: san-regular;
+  }
+  .sub-text{
+    padding-left: 6px;
+    font-size: 12px;
+    font-family: sans-regular;
+    transition: all .6s ease-in-out;
+  }
+}
