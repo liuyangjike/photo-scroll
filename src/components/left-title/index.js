@@ -1,7 +1,7 @@
 import React from 'react'
 import './index.scss'
 
-const FADE_OUT = 'animated fadeOutDown'
+const FADE_OUT = 'animated fadeOutDown delay-func'
 const FADE_IN = 'animated fadeInDown'
 
 const LIST = [
@@ -39,39 +39,46 @@ export default class LeftTitle extends React.Component{
     }
   }
 
-  componentDidMount() {
-    window.addEventListener('wheel', this.wheelHandle, false)
-    this.title.addEventListener('animationend', () => {
+  componentWillReceiveProps(nextProps) {
+    const { activeIndex } = this.props
+    if (activeIndex !== nextProps.activeIndex) {
+      console.log("TCL: LeftTitle -> componentWillReceiveProps -> activeIndex", activeIndex);
       this.setState({
-        fadeIn: '',
-        position: 0,
-        subLeft: 80
+        fadeOut: FADE_OUT,
+        activeIndex
       })
+    }
+  }
+
+  componentDidMount() {
+    this.title.addEventListener('animationend', () => {
+      const { activeIndex, fadeOut } = this.state
+      const isFadeOut = !!fadeOut
+      if (isFadeOut) {  // 下一个标题动画结束后触发
+        this.setState({
+          activeIndex: activeIndex + 1,
+          fadeOut: ''
+        })
+      } else {   // 开场中间动画结束, 触发向左的动画
+        this.setState({
+          fadeIn: '',
+          position: 0,
+          subLeft: 80,
+        })
+      }
     })
-    this.sub.addEventListener('transitionend', () => {
+    this.sub.addEventListener('transitionend', () => {  // 开车过渡动画的第二标题动画
       this.setState({
         subLeft: 0
       })
     })
   }
 
-  wheelHandle = (e) => {
-    const { fadeIn, activeIndex } = this.state
-    if (!fadeIn) {
-      this.setState({
-        fadeOut: FADE_OUT
-      })
-      this.title.addEventListener('animationend', () => {
-        this.setState({
-          fadeOut: '',
-          activeIndex: activeIndex + 1
-        })
-      })
-    }
-  }
 
   render() {
-    const { fadeOut, activeIndex, fadeIn, position, subLeft } = this.state
+    const { fadeOut, fadeIn, position, subLeft, activeIndex } = this.state
+    console.log("TCL: LeftTitle -> render -> activeIndex", activeIndex);
+    // const { activeIndex } = this.props
     const titleObj = LIST[activeIndex] || {}
     let titleStyle = { left: `${position}px` }
     let subStyle = { marginLeft: `${subLeft}px`}

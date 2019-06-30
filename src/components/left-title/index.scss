@@ -1,11 +1,9 @@
-@font-face{
-  font-family: san-regular;
-  src: url('../../assets/fonts/JosefinSans-Regular.ttf')
-}
+
 .title-container{
   position: fixed;
   top: 50vh;
-  padding-left: 50px;
+  padding-left: 3.4vw;
+  z-index: 21;
   margin-top: -40px;
   transition: left 1s ease-in-out;
   
@@ -19,4 +17,8 @@
     font-family: sans-regular;
     transition: all .6s ease-in-out;
   }
+}
+
+.delay-func{
+  animation-delay: 0.2s;
 }
