@@ -2,11 +2,8 @@ import React from 'react'
 import './index.scss'
 
 const FADE_IN = 'animated fadeInRight'
-
 export default class Info extends React.PureComponent{
-
   render() {
-
     return (
       <div className={`info ${FADE_IN}`}>
         <div className='main'>Liuyang</div>

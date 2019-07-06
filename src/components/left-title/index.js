@@ -25,7 +25,6 @@ const LIST = [
     main: 'LIUYANG',
   }
 ]
-
 export default class LeftTitle extends React.PureComponent{
   constructor(props) {
     super(props)

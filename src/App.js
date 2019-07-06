@@ -5,16 +5,12 @@ import Navigation from './components/navigation'
 import ScrollList from './components/scroll-list'
 import Info from './components/info'
 import { SLIDE_WIDTH } from './const'
-
-
 import './App.scss';
 
 const initPosX = window.innerWidth - window.innerHeight * 0.75 
-
 const slideItemWidth = SLIDE_WIDTH * window.innerWidth / 100
 
 class App extends React.Component{
-
   constructor(props) {
     super(props)
     this.state = {
@@ -100,7 +96,6 @@ class App extends React.Component{
       </div>
     )
   }
-  
 }
 
-export default App;
+export default App

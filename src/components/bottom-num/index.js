@@ -4,10 +4,6 @@ import './index.scss'
 const FADE_IN = 'animated fadeInRight'
 
 export default class BottomNum extends React.PureComponent{
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const { activeIndex } = this.props 
 
