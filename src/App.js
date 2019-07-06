@@ -1,5 +1,6 @@
 import React from 'react';
 import LeftTitle from './components/left-title'
+import BottomNum from './components/bottom-num'
 import Navigation from './components/navigation'
 import ScrollList from './components/scroll-list'
 import { SLIDE_WIDTH } from './const'
@@ -31,16 +32,27 @@ class App extends React.Component{
   wheelHandle = (e) => {
     const { activeIndex, translateX, firstHeight } = this.state
     const { wheelDeltaY } = e
-    if (translateX > initPosX + 5 && wheelDeltaY > 0) {
-      this.setState({
-        firstHeight: 100
-      })
+    if (translateX < -slideItemWidth * 2 + initPosX/3 && wheelDeltaY < 0 ) return
+    if (translateX > initPosX + 3 && wheelDeltaY > 0) {
+      if (firstHeight > 101) {
+        this.setState({
+          firstHeight: firstHeight - 0.6
+        })
+      } else if (firstHeight < 99) {
+        this.setState({
+          firstHeight: firstHeight + 0.6
+        })
+      } else {
+        this.setState({
+          firstHeight: 100
+        })
+      }
       return
     }
-    let willIndex = Math.floor((-translateX) / slideItemWidth)
+    let willIndex = Math.floor((-translateX + slideItemWidth /4 ) / slideItemWidth)
     if (activeIndex !== willIndex) {
       this.setState({
-        activeIndex: willIndex
+        activeIndex: willIndex > 0 ? willIndex : 0
       })  
     }
     this.setState({
@@ -51,13 +63,14 @@ class App extends React.Component{
         firstHeight: firstHeight + wheelDeltaY * 0.1
       })
     } else {
-      if (firstHeight <= 58) {
+      if (firstHeight <= 58 && firstHeight > 53) {
         this.setState({
-          firstHeight: 53
+          firstHeight: firstHeight - 0.5
         })
         return
       }
     }
+
   }
 
   onEndAnimate = () => {
@@ -71,7 +84,8 @@ class App extends React.Component{
     return (
       <div className="App">
         <LeftTitle ref={e => this.title = e} activeIndex={activeIndex} translateX={translateX} onEndAnimate={this.onEndAnimate}/>
-        <Navigation />
+        {firstHeight < 96 && <BottomNum activeIndex={activeIndex}/>}
+        {firstHeight < 96 && <Navigation />}
         {!isEndAnimate && <ScrollList translateX={translateX} firstHeight={firstHeight} />}
       </div>
     )

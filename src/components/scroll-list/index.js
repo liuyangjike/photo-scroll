@@ -46,11 +46,15 @@ export default class ScrollList extends React.Component{
             scorllList.map((item, index) => {
               return (
                 <li key={index} className='slide-elemnt' style={eleStyle} ref={e => this[`figure${index}`] = e}>
-                  <Bunk item={item} tIndex={index} firstHeight={firstHeight} />
+                  <Bunk translateX={translateX} item={item} tIndex={index} firstHeight={firstHeight} />
                 </li>
               )
             })
           }
+          <div className='scroll-tip'>
+            <div className='text' style={{opacity: firstHeight < 98 ? 0 : 1}}>Scroll</div>
+            <div className='line' style={{width: firstHeight < 98 ? '0' : '50px'}}></div>
+          </div>
         </ul>
       </section>
     )

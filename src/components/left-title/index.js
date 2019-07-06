@@ -1,7 +1,6 @@
 import React from 'react'
 import './index.scss'
 
-const FADE_OUT = 'animated fadeOutDown delay-short'
 const FADE_IN = 'animated fadeInDown'
 
 const LIST = [
@@ -39,15 +38,6 @@ export default class LeftTitle extends React.PureComponent{
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { activeIndex } = this.props
-    if (activeIndex !== nextProps.activeIndex) { // 控制消失动画
-      this.setState({
-        fadeOut: FADE_OUT,
-      })
-    }
-  }
-
   componentDidMount() {
     this.title.addEventListener('animationend', () => {
       const { fadeOut } = this.state
@@ -77,7 +67,8 @@ export default class LeftTitle extends React.PureComponent{
 
 
   render() {
-    const { fadeOut, fadeIn, position, subLeft, activeIndex } = this.state
+    const { fadeOut, fadeIn, position, subLeft } = this.state
+    const { activeIndex } = this.props 
     const titleObj = LIST[activeIndex] || {}
     let titleStyle = { left: `${position}px` }
     let subStyle = { marginLeft: `${subLeft}px`}
