@@ -20,13 +20,14 @@ export default class NAVIGATION extends React.Component{
   }
 
   render() {
-    const { active, isShow } = this.state
+    const { isShow } = this.state
+    const { router, onRoute } = this.props
     if (!isShow) return null
     return (
       <nav className='navigate'>
         <ul>
-          <li className={FADE_IN}><a href="/" className={active === 'home' ? 'active': ''}>Home</a></li>
-          <li className={FADE_IN_DELAY}><a href="/" className={active === 'concact' ? 'active': ''}>Concact</a></li>
+          <li className={FADE_IN}><a onClick={() => onRoute('home')} className={router === 'home' ? 'active': ''}>Home</a></li>
+          <li className={FADE_IN_DELAY}><a onClick={() => onRoute('concact')}  className={router === 'concact' ? 'active': ''}>Concact</a></li>
         </ul>
       </nav>
     )

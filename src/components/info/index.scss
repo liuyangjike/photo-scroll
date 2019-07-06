@@ -1,0 +1,15 @@
+.info{
+  position: fixed;
+  top: 45px;
+  left: 30vw;
+  z-index: 21;
+  font-family: san-regular;
+  .sub{
+    color: #aaa;
+    // padding: 3px 0;
+    // line-height: 15px;
+  }
+  .main{
+    padding: 6px 0;
+  }
+}

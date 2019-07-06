@@ -10,7 +10,6 @@ export default class BottomNum extends React.PureComponent{
 
   render() {
     const { activeIndex } = this.props 
-    console.log("TCL: BottomNum -> render -> activeIndex", activeIndex);
 
     return (
       <div className={`num-container ${FADE_IN}`}>
