@@ -7,6 +7,8 @@ import { SLIDE_WIDTH } from './const'
 
 import './App.scss';
 
+const initPosX = window.innerWidth - window.innerHeight * 0.75 
+
 const slideItemWidth = SLIDE_WIDTH * window.innerWidth / 100
 
 class App extends React.Component{
@@ -15,8 +17,9 @@ class App extends React.Component{
     super(props)
     this.state = {
       activeIndex: 0,
-      translateX: 0,
-      isScroll: false,
+      translateX: initPosX,
+      firstHeight: 100,
+      isEndAnimate: true
     }
   }
 
@@ -26,14 +29,14 @@ class App extends React.Component{
   }
 
   wheelHandle = (e) => {
-    const { isScroll, activeIndex, translateX } = this.state
-    if (!isScroll) {
-      this.setState({
-        isScroll: true
-      })
-    }
+    const { activeIndex, translateX, firstHeight } = this.state
     const { wheelDeltaY } = e
-    if (translateX > 0 && wheelDeltaY > 0) return
+    if (translateX > initPosX + 5 && wheelDeltaY > 0) {
+      this.setState({
+        firstHeight: 100
+      })
+      return
+    }
     let willIndex = Math.floor((-translateX) / slideItemWidth)
     if (activeIndex !== willIndex) {
       this.setState({
@@ -41,17 +44,35 @@ class App extends React.Component{
       })  
     }
     this.setState({
-      translateX: translateX + wheelDeltaY * 0.75
+      translateX: translateX + wheelDeltaY * 0.70
+    })
+    if (translateX >= initPosX * 0.66 && translateX <= initPosX) {
+      this.setState({
+        firstHeight: firstHeight + wheelDeltaY * 0.1
+      })
+    } else {
+      if (firstHeight <= 58) {
+        this.setState({
+          firstHeight: 53
+        })
+        return
+      }
+    }
+  }
+
+  onEndAnimate = () => {
+    this.setState({
+      isEndAnimate: false
     })
   }
   
   render() {
-    const { activeIndex, translateX } = this.state
+    const { activeIndex, translateX, firstHeight, isEndAnimate } = this.state
     return (
       <div className="App">
-        <LeftTitle ref={e => this.title = e} activeIndex={activeIndex}/>
+        <LeftTitle ref={e => this.title = e} activeIndex={activeIndex} translateX={translateX} onEndAnimate={this.onEndAnimate}/>
         <Navigation />
-        <ScrollList translateX={translateX}/>
+        {!isEndAnimate && <ScrollList translateX={translateX} firstHeight={firstHeight} />}
       </div>
     )
   }

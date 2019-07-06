@@ -2,6 +2,8 @@
 .title-container{
   position: fixed;
   top: 50vh;
+  height: 68px;
+  overflow: hidden;
   padding-left: 3.4vw;
   z-index: 21;
   margin-top: -40px;
@@ -19,6 +21,6 @@
   }
 }
 
-.delay-func{
-  animation-delay: 0.2s;
+.delay-short{
+  animation-delay: 50ms;
 }

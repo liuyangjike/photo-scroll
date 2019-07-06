@@ -1,0 +1,23 @@
+.bunk-elements{
+  position: relative;
+  height: 100%;
+  .bunk-element{
+    position: absolute;
+    bottom: 0;
+  }
+  .posi-zero{
+    height: 53vh;
+    left: 0;
+    z-index: 6;
+  }
+  .posi-one{
+    height: 100vh;
+    left: 18vh;
+    z-index: 5;
+  }
+  .posi-two{
+    height: 32vh;
+    left: 84vh;
+    z-index: 6;
+  }
+}

@@ -1,1 +1,1 @@
-export const SLIDE_WIDTH = 72
+export const SLIDE_WIDTH = 97

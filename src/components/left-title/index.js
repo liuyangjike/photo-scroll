@@ -1,7 +1,7 @@
 import React from 'react'
 import './index.scss'
 
-const FADE_OUT = 'animated fadeOutDown delay-func'
+const FADE_OUT = 'animated fadeOutDown delay-short'
 const FADE_IN = 'animated fadeInDown'
 
 const LIST = [
@@ -27,11 +27,11 @@ const LIST = [
   }
 ]
 
-export default class LeftTitle extends React.Component{
+export default class LeftTitle extends React.PureComponent{
   constructor(props) {
     super(props)
     this.state = {
-      activeIndex: 0,
+      activeIndex: 0,  // 控制与props不同步形成动画
       fadeOut: '',
       fadeIn: FADE_IN,
       position: (window.innerWidth - 200) / 2,
@@ -41,22 +41,21 @@ export default class LeftTitle extends React.Component{
 
   componentWillReceiveProps(nextProps) {
     const { activeIndex } = this.props
-    if (activeIndex !== nextProps.activeIndex) {
-      console.log("TCL: LeftTitle -> componentWillReceiveProps -> activeIndex", activeIndex);
+    if (activeIndex !== nextProps.activeIndex) { // 控制消失动画
       this.setState({
         fadeOut: FADE_OUT,
-        activeIndex
       })
     }
   }
 
   componentDidMount() {
     this.title.addEventListener('animationend', () => {
-      const { activeIndex, fadeOut } = this.state
+      const { fadeOut } = this.state
+      const { activeIndex } = this.props
       const isFadeOut = !!fadeOut
       if (isFadeOut) {  // 下一个标题动画结束后触发
         this.setState({
-          activeIndex: activeIndex + 1,
+          activeIndex,
           fadeOut: ''
         })
       } else {   // 开场中间动画结束, 触发向左的动画
@@ -68,17 +67,17 @@ export default class LeftTitle extends React.Component{
       }
     })
     this.sub.addEventListener('transitionend', () => {  // 开车过渡动画的第二标题动画
+      const { activeIndex, onEndAnimate } = this.props
       this.setState({
         subLeft: 0
       })
+      onEndAnimate()
     })
   }
 
 
   render() {
     const { fadeOut, fadeIn, position, subLeft, activeIndex } = this.state
-    console.log("TCL: LeftTitle -> render -> activeIndex", activeIndex);
-    // const { activeIndex } = this.props
     const titleObj = LIST[activeIndex] || {}
     let titleStyle = { left: `${position}px` }
     let subStyle = { marginLeft: `${subLeft}px`}
